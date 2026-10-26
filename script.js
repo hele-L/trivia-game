@@ -170,13 +170,26 @@
             errName.textContent = "Name must be 2-30 characters";
             errName.style.display = "inline";
             isValid = false;
+        }else{
+            errName.textContent ="";
+            errName.style.display = "none";
         }
 
-        if (emailValue ){
-            
+        function validateEmail(emailValue) {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.com$/;
+            return emailPattern.test(emailValue);
+            }
+
+        if (validateEmail(emailValue) == false){
+            errEmail.textContent = "Must be a valid email"
+            errEmail.style.display = "inline";
+            isValid = false;
+        }else{
+            errEmail.textContent = "";
+            errEmail.style.display="none";
         }
 
-        return true;
+        return isValid;
     }
 
     // ======================================================
@@ -185,6 +198,25 @@
     function loadProgress() {
         // TODO: implement robust load:
         // - Return default { bestScore: 0, bestTotal: 0, attempts: 0 } if missing/invalid
+        try {
+            const data = localStorage.getItem(STORAGE_KEY);
+
+            if(!data){
+                return {bestScore: 0, bestTotal: 0, attempts: 0};
+            }
+
+            const parse =JSON.parse(data);
+            if (typeof parse == "object" & parse !== null ){
+                return{
+                    bestScore: typeof parse.bestScore === "number"? parse.bestScore: 0,
+                    bestTotal: typeof parse.bestTotal ==="number" ? parse.bestTotal: 0,
+                    attempts: typeof parse.attempts=== "number" ? parse.attempts: 0
+                };
+            }
+        }
+        catch (e){
+
+        }
         return { bestScore: 0, bestTotal: 0, attempts: 0 };
     }
 
@@ -192,9 +224,8 @@
     // TASK B: Save best score to localStorage
     // ======================================================
     function saveProgress(obj) {
-        // TODO: JSON.stringify + localStorage.setItem(STORAGE_KEY, ...)
+        localStorage.setItem(STORAGE_KEY,JSON.stringify(obj))
     }
-
     // ======================================================
     // TASK C: Request a token from OpenTDB
     // ======================================================

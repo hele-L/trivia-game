@@ -236,6 +236,14 @@
         // - var data = await res.json()
         // - if (!data.token) throw Error(...)
         // - return data.token
+        var res = await fetch(API.token);
+        if (!resultText.ok){
+            throw new Error("Failed to fetch session token.");
+        }
+        var data= await res.json();
+        if(!data.token){
+            throw new Error ("Invalid token received from API.")
+        }
         return null;
     }
 
@@ -250,6 +258,21 @@
         //   0 -> return results
         //   5 -> throw rate limit error
         //   else -> throw generic error
+        var url = API.questionsUrl(cfg.amount, cfg.difficulty, state.player.category, state.token);
+        var res = await fetch(url);
+
+        if(!res.ok){
+            throw new Error ("Network error while fetching questions.")
+        }
+        var data = await res.json();
+
+        if(data.response_code === 0){
+            return data.results;
+        }else if(data.response_code === 5){
+            throw new Error ("Rate limit exceed.");
+        }else{
+            throw new Error("API returned responded code: "+ data.response_code);
+        }
         return [];
     }
 

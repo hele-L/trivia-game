@@ -237,14 +237,14 @@
         // - if (!data.token) throw Error(...)
         // - return data.token
         var res = await fetch(API.token);
-        if (!resultText.ok){
+        if (!res.ok){
             throw new Error("Failed to fetch session token.");
         }
         var data= await res.json();
         if(!data.token){
             throw new Error ("Invalid token received from API.")
         }
-        return null;
+        return data.token;
     }
 
     // ======================================================
@@ -429,7 +429,7 @@
         // --------------------------------------------------
         // TODO : Set (ROUND.difficulty) based on the dropdown selection (state - player - mode).
         // The dropdown provides: "easy", "medium", or "hard"
-
+        ROUND.difficulty = state.player.mode;
 
         beginRound();
         showOnly(screenQuiz);

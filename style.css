@@ -125,6 +125,17 @@ button:disabled {
   border-color: rgba(255, 255, 255, 0.25);
 }
 
+.choiceBtn.correct {
+    background: #166534 !important; 
+    border-color: #22c55e !important;
+}
+
+.choiceBtn.incorrect {
+    background: #991b1b !important; 
+    border-color: #ef4444 !important;
+}
+
+
 .topbar {
   display: flex;
   flex-wrap: wrap;
@@ -132,3 +143,18 @@ button:disabled {
   justify-content: space-between;
   align-items: center;
 }
+
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  font-size: 2rem;
+  background: linear-gradient(135deg, #2563eb, #38bdf8);
+  padding: 4px 10px;
+  border-radius: 8px;
+  display: inline-block;
+}
+

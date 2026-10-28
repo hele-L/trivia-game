@@ -347,6 +347,7 @@
         // Example:
         // q.userChoice = choiceText;
 
+        q.userChoice = choiceText;
         if (choiceText === q.correct) {
             state.score = state.score + 1;
             scoreEl.textContent = String(state.score);
@@ -389,7 +390,12 @@
             //  yourAns = qq.userChoice
             //  ok = (yourAns === qq.correct)
             //  use lines.push to show ✓ or ✗
+            var yourAns = qq.userChoice || "No Answer";
+            var ok = (yourAns === qq.correct);
+            var mark = ok? "✓" : "✗";
 
+            lines.push("Your answer: " + yourAns + " "+ mark);
+            lines.push("Correct answer: "+ qq.correct);
             lines.push("");
         }
 
